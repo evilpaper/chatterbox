@@ -15,16 +15,6 @@ class MessageApp {
     this.messages = filepath ? this.readFromJson() : [];
   }
 
-  post(content) {
-    const item = {
-      id: getID(this.messages),
-      content: content,
-      date: new Date(),
-    };
-    this.messages.push(item);
-    return this.messages;
-  }
-
   readFromJson() {
     return JSON.parse(
       fs.readFileSync(
@@ -37,6 +27,30 @@ class MessageApp {
     );
   }
 
+  writeToJson() {
+    if (this.filepath) {
+      const jsonItem = JSON.stringify(this.messages);
+      fs.writeFileSync(
+        __dirname + path.normalize(this.filepath),
+        jsonItem,
+        (err) => {
+          if (err) throw err;
+        }
+      );
+    }
+  }
+
+  post(content) {
+    const item = {
+      id: getID(this.messages),
+      content: content,
+      date: new Date(),
+    };
+    this.messages.push(item);
+    this.writeToJson();
+    return this.messages;
+  }
+
   get(id) {
     return this.messages.filter((message) => message.id === id)[0];
   }
@@ -44,11 +58,13 @@ class MessageApp {
   update(id, update) {
     let index = this.messages.findIndex((message) => message.id == id);
     this.messages[index].content = update;
+    this.writeToJson();
     return this.messages[index];
   }
 
   delete(id) {
     this.messages = this.messages.filter((message) => message.id != id);
+    this.writeToJson();
     return this.messages;
   }
 }
