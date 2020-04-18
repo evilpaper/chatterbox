@@ -1,3 +1,6 @@
+import fs from "fs";
+import path from "path";
+
 function getID(array) {
   if (array.length > 0) {
     return array[array.length - 1].id + 1;
@@ -7,8 +10,9 @@ function getID(array) {
 }
 
 class MessageApp {
-  constructor() {
-    this.messages = [];
+  constructor(filepath) {
+    this.filepath = filepath;
+    this.messages = filepath ? this.readFromJson() : [];
   }
 
   post(content) {
@@ -19,6 +23,18 @@ class MessageApp {
     };
     this.messages.push(item);
     return this.messages;
+  }
+
+  readFromJson() {
+    return JSON.parse(
+      fs.readFileSync(
+        __dirname + path.normalize(this.filepath),
+        "utf8",
+        (err, data) => {
+          if (err) throw err;
+        }
+      )
+    );
   }
 
   get(id) {
