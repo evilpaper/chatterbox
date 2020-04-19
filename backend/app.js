@@ -41,31 +41,49 @@ class MessageApp {
   }
 
   post(content) {
-    const item = {
-      id: getID(this.messages),
-      content: content,
-      date: new Date(),
-    };
-    this.messages.push(item);
-    this.writeToJson();
-    return this.messages;
+    if (content) {
+      this.messages.push({
+        content: content,
+        date: new Date(),
+        id: getID(this.messages),
+      });
+      this.writeToJson();
+      return this.messages;
+    } else if (!content) {
+      return [];
+    }
   }
 
   get(id) {
     return this.messages.filter((message) => message.id === id)[0];
   }
 
+  getAll() {
+    return this.messages;
+  }
+
   update(id, update) {
     let index = this.messages.findIndex((message) => message.id == id);
-    this.messages[index].content = update;
-    this.writeToJson();
-    return this.messages[index];
+
+    if (index >= 0) {
+      this.messages[index].content = update;
+      this.writeToJson();
+      return this.messages[index];
+    } else {
+      return [];
+    }
   }
 
   delete(id) {
-    this.messages = this.messages.filter((message) => message.id != id);
-    this.writeToJson();
-    return this.messages;
+    let index = this.messages.findIndex((message) => message.id == id);
+
+    if (index >= 0) {
+      this.messages.splice(index, 1);
+      this.writeToJson();
+      return this.messages;
+    } else {
+      return "Message not found in database";
+    }
   }
 }
 

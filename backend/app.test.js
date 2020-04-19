@@ -82,4 +82,29 @@ describe("app", function () {
     let testFileClearedApp = new MessageApp("/json/testMessages.json");
     expect(testFileClearedApp.messages.length).to.equal(0);
   });
+
+  it("getAll returns all messages", function () {
+    expect(testApp.getAll()).to.be.an("array");
+    // expect(testApp.getAll().length).to.be.an(1);
+  });
+
+  it("rejects empty messages", function () {
+    let testApp = new MessageApp();
+    expect(testApp.post("")).to.deep.equal([]);
+  });
+
+  it("no messages if no messages are sent", function () {
+    let testApp = new MessageApp();
+    expect(testApp.getAll()).to.deep.equal([]);
+  });
+
+  it("rejects false update", function () {
+    let testApp = new MessageApp();
+    expect(testApp.update(0, "")).to.deep.equal([]);
+  });
+
+  it("errors if no message to delete", function () {
+    let testApp = new MessageApp();
+    expect(testApp.delete(0)).to.deep.equal("Message not found in database");
+  });
 });
