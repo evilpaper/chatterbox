@@ -1,14 +1,14 @@
 import express from "express";
-import MessageApp from "./lib/model";
+import routes from "./lib/routes.js";
+import bodyParser from "body-parser";
 
 const app = express();
 
-let messageApp = new MessageApp("/json/testMessages.json");
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-app.get("/", async (req, res) => {
-  let result = messageApp.getAll();
-  res.json(result);
-});
+app.use(routes);
 
 app.listen(3001, function () {
   console.log("Connected");
