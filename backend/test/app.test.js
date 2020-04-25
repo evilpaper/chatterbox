@@ -32,4 +32,5 @@ describe("message API endpoint tests", function () {
       done();
     });
   });
+
 });
