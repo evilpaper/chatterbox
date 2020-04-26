@@ -10,10 +10,21 @@ if (process.env.npm_lifecycle_event == "test") {
   messageApp = new MessageApp("/json/messages.json");
 }
 
-// Get all messages from the database
 function getAll() {
   return new Promise((resolve, reject) => {
     let result = messageApp.getAll();
+    if (result !== []) {
+      resolve(result);
+    } else {
+      reject(result);
+    }
+  });
+}
+
+function getSingleMessage(id) {
+  return new Promise((resolve, reject) => {
+    let result = messageApp.get(id);
+    console.log(`Result is ${result}`);
     if (result !== []) {
       resolve(result);
     } else {
@@ -46,6 +57,7 @@ function deleteMessage(id) {
 
 module.exports = {
   getAll,
+  getSingleMessage,
   post,
   deleteMessage,
 };

@@ -48,6 +48,7 @@ class MessageApp {
         id: getID(this.messages),
       });
       this.writeToJson();
+      // console.log(this.messages);
       return this.messages;
     } else if (!content) {
       return [];
@@ -55,7 +56,7 @@ class MessageApp {
   }
 
   get(id) {
-    return this.messages.filter((message) => message.id === id)[0];
+    return this.messages.filter((message) => message.id === parseInt(id))[0];
   }
 
   getAll() {

@@ -1,11 +1,18 @@
 import { Router } from "express";
+// import MessageApp from "./model.js";
 const messageApp = require("./controller.js");
 const router = Router();
 
 router.get("/", async (req, res) => {
-  console.log(req.params, req.body);
   await messageApp
     .getAll()
+    .then((messages) => res.json(messages))
+    .catch((err) => res.status(404).json(err));
+});
+
+router.get("/message/:id", async (req, res) => {
+  await messageApp
+    .getSingleMessage(req.params.id)
     .then((messages) => res.json(messages))
     .catch((err) => res.status(404).json(err));
 });

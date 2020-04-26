@@ -33,6 +33,17 @@ describe("message API endpoint tests", function () {
     });
   });
 
+  it("gets a single message", function (done) {
+    const res = request(MessageApp).get("/message/1");
+    res.expect(200).end(function (err, res) {
+      if (err) {
+        return done(err);
+      }
+      expect(res.body.id).to.equal(1);
+      done();
+    });
+  });
+
   it("deletes a message", function (done) {
     const res = request(MessageApp)
       .delete("/delete/1")
