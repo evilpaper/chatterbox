@@ -24,7 +24,17 @@ function getAll() {
 function getSingleMessage(id) {
   return new Promise((resolve, reject) => {
     let result = messageApp.get(id);
-    console.log(`Result is ${result}`);
+    if (result !== []) {
+      resolve(result);
+    } else {
+      reject(result);
+    }
+  });
+}
+
+function updateMessage(id, content) {
+  return new Promise((resolve, reject) => {
+    let result = messageApp.update(id, content);
     if (result !== []) {
       resolve(result);
     } else {
@@ -60,4 +70,5 @@ module.exports = {
   getSingleMessage,
   post,
   deleteMessage,
+  updateMessage,
 };

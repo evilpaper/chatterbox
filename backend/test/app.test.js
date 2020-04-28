@@ -17,7 +17,7 @@ describe("message API endpoint tests", function () {
   });
 
   it("post a message", function (done) {
-    var data = {
+    const data = {
       content: "hi world",
     };
     const res = request(MessageApp)
@@ -39,7 +39,24 @@ describe("message API endpoint tests", function () {
       if (err) {
         return done(err);
       }
-      expect(res.body.id).to.equal(1);
+      expect(res.body.content).to.equal("hi world");
+      done();
+    });
+  });
+
+  it("updates a message", function (done) {
+    const data = {
+      content: "Hello World",
+    };
+    const res = request(MessageApp)
+      .put("/update/1")
+      .send(data)
+      .set("Accept", "application/json");
+    res.expect(200).end(function (err, res) {
+      if (err) {
+        return done(err);
+      }
+      expect(res.body.content).to.equal("Hello World");
       done();
     });
   });
