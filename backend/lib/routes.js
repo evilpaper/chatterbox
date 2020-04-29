@@ -1,5 +1,4 @@
 import { Router } from "express";
-// import MessageApp from "./model.js";
 const messageApp = require("./controller.js");
 const router = Router();
 

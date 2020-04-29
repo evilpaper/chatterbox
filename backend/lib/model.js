@@ -48,7 +48,6 @@ class MessageApp {
         id: getID(this.messages),
       });
       this.writeToJson();
-      // console.log(this.messages);
       return this.messages;
     } else if (!content) {
       return [];
@@ -65,7 +64,6 @@ class MessageApp {
 
   update(id, update) {
     let index = this.messages.findIndex((message) => message.id == id);
-
     if (index >= 0) {
       this.messages[index].content = update;
       this.writeToJson();
@@ -77,7 +75,6 @@ class MessageApp {
 
   delete(id) {
     let index = this.messages.findIndex((message) => message.id == id);
-
     if (index >= 0) {
       this.messages.splice(index, 1);
       this.writeToJson();
