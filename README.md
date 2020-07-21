@@ -1,0 +1,3 @@
+# chatterbox
+
+Chatterbox is a minimalistic message wall. Work in progress...
